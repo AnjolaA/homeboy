@@ -70,4 +70,4 @@ yarn-error.log
 dist
 ghost/*
 .env copy
-.env
+

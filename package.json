@@ -1,6 +1,6 @@
 {
-  "name": "eleventy-starter-ghost",
-  "version": "1.0.0",
+  "name": "anjola-starter-ghost",
+  "version": "0.0.1",
   "description": "A starter template to build websites with Ghost & Eleventy",
   "main": ".eleventy.js",
   "scripts": {

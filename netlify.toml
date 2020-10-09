@@ -1,6 +1,13 @@
-[build]
-  command = "npm run build"
-  publish = "dist/"
-
 [template]
   incoming-hooks = ["Ghost"]
+
+# Production context:
+# All deploys from the main repository branch
+# will inherit these settings.
+[context.production]
+  command = "npm run build"
+  publish = "dist/"
+  [context.production.environment]
+    GHOST_API_URL = "super secret"
+    GHOST_CONTENT_API_KEY = "super secret"
+    SITE_URL = "super secret"

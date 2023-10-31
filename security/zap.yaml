@@ -1,0 +1,25 @@
+---
+env:
+  contexts:
+    - name: "security-scan"
+      urls:
+        - "https://thinkyorubafirst.org"
+      excludePaths: [ ]
+      authentication:
+        parameters: {}
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: { }
+jobs:
+  - type: activeScan                   # The active scanner - this actively attacks the target so should only be used with permission
+    parameters:
+  - type: report                       # Report generation
+    parameters:
+      template: traditional-html                        # String: The template id, default : traditional-html
+      reportDir: report                       # String: The directory into which the report will be written
+      reportFile: index                     # String: The report file name pattern, default: {{yyyy-MM-dd}}-ZAP-Report-[[site]]
+      reportTitle: Reporting                    # String: The report title
+      reportDescription:               # String: The report description
+      displayReport:    

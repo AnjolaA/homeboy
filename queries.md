@@ -49,3 +49,18 @@ while read namespace; do
 done < namespaces.txt
 
 echo "Results have been written to $output_file"
+
+```
+
+```#!/bin/bash
+
+# Define the output file
+output_file="deployments_with_v1d1.txt"
+
+# Clear the output file if it exists
+> "$output_file"
+
+# Get all deployments in all namespaces and filter for those containing 'v1d1'
+kubectl get deployments --all-namespaces -o jsonpath='{range .items[?(@.metadata.name contains "v1d1")]}{.metadata.namespace}{"\t"}{.metadata.name}{"\n"}{end}' >> "$output_file"
+
+echo "Deployment names containing 'v1d1' and their namespaces have been written to $output_file."

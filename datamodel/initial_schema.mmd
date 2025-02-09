@@ -1,0 +1,47 @@
+erDiagram
+    FACT_INDIVIDUAL ||--o{ DIM_RELATED_PEOPLE : has
+    FACT_INDIVIDUAL ||--o{ DIM_COMPANY_OVERLAP : has_overlap
+
+    FACT_INDIVIDUAL {
+        string jobID PK
+        string name
+        int sanctions_count
+        int peps_count
+        int social_reach_count
+        int totalWebsites
+        int websitesFilteredout
+        int websitesAnalysed
+        int jobTitles
+        int drugs
+        int concerns
+        int mediaSources
+        int charitable
+        int companyFormation
+        int professionalBodies
+        int personalWebsites
+        string manual_effort
+        string report_duration
+        string employer_name
+        string employer_job_title
+        string employer_town
+    }
+
+    DIM_RELATED_PEOPLE {
+        string ID PK
+        string jobID FK
+        string first_name
+        string last_name
+        string employer
+        string job_title
+        date start_date
+        date end_date
+    }
+
+    DIM_COMPANY_OVERLAP {
+        string overlap_id PK
+        string ID FK
+        string employer
+        string job_title
+        date appointed_on
+        date resigned_on
+    }

@@ -16,12 +16,11 @@ jobs:
         SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
       run: |
         echo "$SUPER_SECRET"    
-    - uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
+    - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-  - name: Run SQL script
-      run: sqlcmd -S ${{ secrets.DB_SERVER }},1433 -d datawarehouse -U ${{ secrets.DB_USER }} -P ${{ secrets.DB_PASSWORD }} -i ./sqlscripts/user_related_tables.sql        
-      skip-firewall-check: true
+    - name: Run SQL script
+      run: sqlcmd -S ${{ secrets.DB_SERVER }},1433 -d datawarehouse -U ${{ secrets.DB_USER }} -P ${{ secrets.DB_PASSWORD }} -i ./sqlscripts/user_related_tables.sql
     - uses: azure/sql-action@v2.3
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}

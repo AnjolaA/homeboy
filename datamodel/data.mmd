@@ -1,0 +1,74 @@
+erDiagram
+    FACT_INDIVIDUAL ||--o{ DIM_PERSON : has
+    FACT_INDIVIDUAL ||--o{ DIM_EMPLOYER : works_for
+    FACT_INDIVIDUAL ||--o{ DIM_STATS : contains
+    FACT_INDIVIDUAL ||--o{ DIM_IMAGES : has
+    FACT_INDIVIDUAL ||--o{ DIM_RELATED_PEOPLE : associates_with
+
+    FACT_INDIVIDUAL {
+        string individual_id PK
+        string type
+        string name
+        string display_picture
+        boolean high_profile
+        int sanctions_count
+        int peps_count
+        int social_reach_count
+        text biography
+    }
+
+    DIM_PERSON {
+        string person_id PK
+        string first_name
+        string last_name
+        date date_of_birth
+        string image_url
+    }
+
+    DIM_EMPLOYER {
+        string employer_id PK
+        string name
+        string job_title
+        string town
+    }
+
+    DIM_STATS {
+        string stats_id PK
+        int total_websites
+        int websites_filtered_out
+        int websites_analysed
+        int job_titles
+        int total_images
+        int drugs
+        int concerns
+        int media_sources
+        int charitable
+        int company_formations
+        int professional_bodies
+        int personal_websites
+        string manual_effort
+        int website_text_extraction_failures
+        string report_duration
+    }
+
+    DIM_IMAGES {
+        string image_id PK
+        string src
+        string url
+        string caption
+        int date_year
+        string category
+        string logo
+        string screenshot_url
+    }
+
+    DIM_RELATED_PEOPLE {
+        string related_person_id PK
+        string first_name
+        string last_name
+        string employer
+        string job_title
+        date appointed_on
+        date resigned_on
+        date date_of_birth
+    }

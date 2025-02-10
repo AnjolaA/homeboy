@@ -74,3 +74,4 @@ ghost/*
 .env
 .login
 .env
+.cred.json

@@ -1,0 +1,54 @@
+name: Develop Deploy Datawarehouse Service
+
+on:
+  push:
+    branches:
+      - develop
+
+env:
+  AZURE_FUNCTIONAPP_NAME: 'development-yoono-datawarehouse-service'
+  RESOURCE_GROUP: 'Yoono-Development-Linux'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 'Resolve Project Dependencies Using Pip'
+        shell: bash
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          python -m pip install --upgrade pip
+          pip install --require-hashes --no-deps -r requirements.txt --target=".python_packages/lib/site-packages"
+          popd
+          
+      - name: 'Zip Function App'
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          zip -r dwfunctionapp.zip .
+          popd
+        env:
+          AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+
+      - name: 'Run Azure Functions Action for Zip Deploy'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          publish-profile: ${{ env.PUBLISH_PROFILE }}
+          package: './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/dwfunctionapp.zip'

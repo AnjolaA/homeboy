@@ -1,0 +1,1 @@
+As a Lead DevOps Engineer, you need to explain contract testing to a team of technical and non-technical audience. Prepare a talk with slides explaining with relatable examples which a 10 year old would also understand. Explain consumers, providers, pacts, pact broker and other important benefits of when contract testing is to be used and when not to use it.
